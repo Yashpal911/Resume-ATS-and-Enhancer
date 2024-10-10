@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #ffffff;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    background: #C3E8BD;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.drop-zone {
+    border: 2px dashed #5B7553;
+    padding: 40px;
+    margin: 20px 0;
+    cursor: pointer;
+    width: 50%;
+    margin: auto;
+}
+#uploadButton{
+    /* yet to be done */
+}
+
+#results p {
+    font-size: 1.2em;
+}
+
+.drop-zone.dragover {
+    border-color: green;
+}

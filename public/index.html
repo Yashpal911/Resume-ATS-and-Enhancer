@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Parser</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Resume Parser</h1>
+        <input type="file" id="fileInput" accept=".pdf, .docx, .jpg, .png" style="display: none;">
+        <label for="jobrole">Select Job Role:</label>
+        <select id="jobrole" name="role">
+            <!-- Roles will be added from javascript accodring to the dataset -->
+        </select>
+        <!-- <button onclick="sub()">submit</button> -->
+        <div id="dropZone" class="drop-zone">
+            <p>Drag & drop your file here or click to select a file</p>
+        </div>
+        <button type="submit" id="uploadButton">Upload and Parse</button>
+        <div id="results">
+            <h2>Extracted Details</h2>
+            <p><strong>Phone Number:</strong> <span id="phoneNumber">Not found</span></p>
+            <p><strong>Skills:</strong> <span id="skills">Not found</span></p>
+            <p><strong>Education:</strong> <span id="education">Not found</span></p>
+            <p><strong>Score:</strong> <span id="score"></span></p>
+        </div>
+    </div>
+    <script src="jobroles.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
