@@ -1,34 +1,23 @@
-// Export the dataset if using in a module-based environment
-// module.exports = jobRoles;  // Uncomment this line if using Node.js or modules
 
-    // ... (other job roles)
+// container under result
+function resultdiv(branch, text){
+const section = document.createElement("p");
+section.setAttribute("class","result_div")
+section.innerText = `${branch} :: ${text}`;
+document.getElementById("results").appendChild(section);
+}
 
-    const jobRoleSelect = document.getElementById('jobrole');
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // Add default option
-        const defaultOption = document.createElement('option');
-        defaultOption.value = '';
-        defaultOption.textContent = 'SELECT JOB ROLE';
-        defaultOption.disabled = true;
-        defaultOption.selected = true;
-        jobRoleSelect.appendChild(defaultOption);
-    
-        // Sort jobRoles array alphabetically by the job role
-        const sortedJobRoles = jobRoles.sort((a, b) => a.role.localeCompare(b.role));
-    
-        sortedJobRoles.forEach(job => {
-            const option = document.createElement('option');
-            option.value = job.role;
-            option.textContent = job.role;
-            jobRoleSelect.appendChild(option);
-        });
-    });
-    
+// container under enhancement suggestions
+function enhancementDetails(heading,text,modifiedText){
+    const section = document.createElement("div");
+    section.setAttribute("class","suggestions_div")
+    section.innerHTML = ``;
+    document.getElementById("suggestions").appendChild(section);
+}
 
 
-
-
+resultdiv()
+enhancementDetails()
 
 const dropZone = document.getElementById('dropZone');
 const uploadButton = document.getElementById('uploadButton');
@@ -64,46 +53,48 @@ uploadButton.addEventListener('click', async () => {
         alert('Please select a file (PDF, Word, or image).');
         return;
     }
-
+    
     if (jobRoleSelect.value === '') {
         // User selected the default option
         alert('Please select a job role!');
         return false;
     } 
-   
+    
     const allowedExtensions = [
         'application/pdf', 
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
         'image/jpeg', 
         'image/png'
     ];
-
+    
     // Check if the file type is valid
     if (!allowedExtensions.includes(selectedFile.type)) {
         alert('Please upload a valid file: PDF, Word (docx), JPG, or PNG.');
         return;
     }
-
+    
     const formData = new FormData();
     formData.append('file', selectedFile);
-
+    
     // SHOW LODAING INDICATOR
     const loadingMessage = document.createElement('p');
     loadingMessage.textContent = 'Uploading...';
     dropZone.appendChild(loadingMessage);
     uploadButton.disabled= true;                //Button disabled
+    
+
 
     try {
         const response = await fetch('/parse', {
             method: 'POST',
             body: formData
         });
-
-        const data = await response.json();
-        document.getElementById('phoneNumber').textContent = data.phoneNumber || 'Not found';
-        document.getElementById('skills').textContent = data.skills || 'Not found';
-        document.getElementById('education').textContent = data.education || 'Not found';
         
+        const data = await response.json();
+        resultdiv("phone number",data.phoneNumber || 'Not found')
+
+
+
         console.log('Text with hashes:', data.textWithHashes);
         console.log('result:', data.result);
         calculateScore(data.skills);       

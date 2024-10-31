@@ -25,9 +25,6 @@ body {
     width: 50%;
     margin: auto;
 }
-#uploadButton{
-    /* yet to be done */
-}
 
 #results p {
     font-size: 1.2em;
@@ -35,4 +32,13 @@ body {
 
 .drop-zone.dragover {
     border-color: green;
+}
+
+.result_div{
+
+}
+
+.suggestions_div{
+
+
 }

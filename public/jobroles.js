@@ -361,3 +361,30 @@ const jobRoles = [
  
   
 
+// Export the dataset if using in a module-based environment
+// module.exports = jobRoles;  // Uncomment this line if using Node.js or modules
+
+    // ... (other job roles)
+
+    const jobRoleSelect = document.getElementById('jobrole');
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Add default option
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'SELECT JOB ROLE';
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        jobRoleSelect.appendChild(defaultOption);
+    
+        // Sort jobRoles array alphabetically by the job role
+        const sortedJobRoles = jobRoles.sort((a, b) => a.role.localeCompare(b.role));
+    
+        sortedJobRoles.forEach(job => {
+            const option = document.createElement('option');
+            option.value = job.role;
+            option.textContent = job.role;
+            jobRoleSelect.appendChild(option);
+        });
+    });
+    
