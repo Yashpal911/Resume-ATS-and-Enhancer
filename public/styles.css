@@ -34,11 +34,22 @@ body {
     border-color: green;
 }
 
-.result_div{
-
+#results, #suggestions{
+    display: flex;
+    width: 80%;
+    margin: 20px auto;
+    border: solid red;
+    padding: 20px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
-
-.suggestions_div{
-
-
+.result_div, .suggestions_div{
+border: solid grey;
+border-radius: 10px;
+height: auto;
+padding: 20px;
+width: auto;
+}
+.result_div:hover, .suggestions_div:hover{
+     border: solid black;
 }

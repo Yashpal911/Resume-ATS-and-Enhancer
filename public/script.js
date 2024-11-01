@@ -15,9 +15,8 @@ function enhancementDetails(heading,text,modifiedText){
     document.getElementById("suggestions").appendChild(section);
 }
 
-
-resultdiv()
-enhancementDetails()
+resultdiv();
+enhancementDetails();
 
 const dropZone = document.getElementById('dropZone');
 const uploadButton = document.getElementById('uploadButton');
