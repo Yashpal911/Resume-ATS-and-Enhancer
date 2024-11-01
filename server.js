@@ -68,16 +68,16 @@ app.post('/parse', upload.single('file'), async (req, res) => {
         let sum = Summary[1].trim()
         const chatSession = model.startChat({
             generationConfig,
-         // safetySettings: Adjust safety settings
-         // See https://ai.google.dev/gemini-api/docs/safety-settings
+        //  safetySettings: Adjust safety settings
+        //  See https://ai.google.dev/gemini-api/docs/safety-settings
             history: [
             ],
           });
         
           const result = await chatSession.sendMessage(`provide me how much projects has been discussed within this resume ${text} (reply only number no text)`);
           const result2 = await chatSession.sendMessage(`Check the grammer and is there any need of modification: ${sum} if ok then retrun true else return the modified string`);
-          console.log(result.response.text());
-          console.log(result2.response.text());
+          const question = await chatSession.sendMessage(`provide some skills based on the given to enhance it "${skillsMatch[1].trim()}"`);
+         console.log(question.response.text())
           // let resultt = result.response.text();
 
         // Check if the matches were found before calling .trim()

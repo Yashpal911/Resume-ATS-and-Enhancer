@@ -53,3 +53,7 @@ width: auto;
 .result_div:hover, .suggestions_div:hover{
      border: solid black;
 }
+
+.hide{
+    display: none;
+}
