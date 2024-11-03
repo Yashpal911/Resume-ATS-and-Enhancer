@@ -34,7 +34,7 @@ body {
     border-color: green;
 }
 
-#results, #suggestions{
+.resultsDecoration, .suggestionsDe{
     display: flex;
     width: 80%;
     margin: 20px auto;
@@ -56,4 +56,8 @@ width: auto;
 
 .hide{
     display: none;
+}
+
+.show{
+    display: block;
 }

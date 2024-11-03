@@ -1,11 +1,21 @@
 
 // container under result
+let resultHide = true;
+let enhancementHide = true;
+
 function resultdiv(branch, text){
+    if(resultHide == true){
+        document.getElementById("results").classList.add("resultsDecoration");
+        resultHide = false
+    }
 const section = document.createElement("p");
 section.setAttribute("class","result_div")
 section.innerText = `${branch} :: ${text}`;
 document.getElementById("results").appendChild(section);
 }
+resultdiv()
+resultdiv()
+resultdiv()
 
 // container under enhancement suggestions
 function enhancementDetails(heading,text,modifiedText){
@@ -15,8 +25,6 @@ function enhancementDetails(heading,text,modifiedText){
     document.getElementById("suggestions").appendChild(section);
 }
 
-resultdiv();
-enhancementDetails();
 
 const dropZone = document.getElementById('dropZone');
 const uploadButton = document.getElementById('uploadButton');
