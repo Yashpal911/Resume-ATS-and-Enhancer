@@ -3,18 +3,42 @@
 let resultHide = true;
 let enhancementHide = true;
 
+let resultSection = document.getElementById("results");
 function resultdiv(branch, text){
     if(resultHide == true){
-        document.getElementById("results").classList.add("resultsDecoration");
-        resultHide = false
+
+        resultSection.classList.add("resultsDecoration");
+
+        const resultHeading = document.createElement("h1");
+        resultHeading.innerText = `Result`;
+        resultSection.appendChild(resultHeading);
+        let div = document.createElement("div");
+        div.setAttribute("id","mainResult")
+        resultSection.appendChild(div);
+
+        
+        const section = document.createElement("p");
+        section.setAttribute("class","result_div")
+        section.innerText = `${branch} :: ${text}`;
+        document.getElementById("mainResult").appendChild(section);
+
+        resultHide = false;
+
     }
-const section = document.createElement("p");
-section.setAttribute("class","result_div")
-section.innerText = `${branch} :: ${text}`;
-document.getElementById("results").appendChild(section);
+
+    else{
+        const section = document.createElement("p");
+        section.setAttribute("class","result_div")
+        section.innerText = `${branch} :: ${text}`;
+        document.getElementById("mainResult").appendChild(section);
+    }
+
 }
+
 resultdiv()
+
 resultdiv()
+
 resultdiv()
 
 // container under enhancement suggestions
