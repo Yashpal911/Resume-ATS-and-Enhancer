@@ -1,7 +1,7 @@
 
 // container under result
 let resultHide = true;
-let enhancementHide = true;
+let suggestionhide = true;
 
 let resultSection = document.getElementById("results");
 function resultdiv(branch, text){
@@ -35,18 +35,33 @@ function resultdiv(branch, text){
 
 }
 
-resultdiv()
 
-resultdiv()
+// container under suggestion suggestions
+function suggestionDetails(heading,text,modifiedText){
+    if(suggestionhide==true){
+        resultSection.classList.add("SuggestionDecoration");
 
-resultdiv()
+        const SuggestionHeading = document.createElement("h1");
+        SuggestionHeading.innerText = `Suggestions`;
+        resultSection.appendChild(SuggestionHeading);
+        let div = document.createElement("p");
+        div.setAttribute("id","mainSuggestion")
+        resultSection.appendChild(div);
 
-// container under enhancement suggestions
-function enhancementDetails(heading,text,modifiedText){
-    const section = document.createElement("div");
+        const section = document.createElement("p");
+        section.setAttribute("class","suggestions_div")
+        section.innerHTML = `hello`;
+        document.getElementById("mainSuggestion").appendChild(section);
+
+        suggestionhide = false;
+    }
+
+    else{
+    const section = document.createElement("p");
     section.setAttribute("class","suggestions_div")
-    section.innerHTML = ``;
-    document.getElementById("suggestions").appendChild(section);
+    section.innerText = `helllo`;
+    document.getElementById("mainSuggestion").appendChild(section);
+    }
 }
 
 

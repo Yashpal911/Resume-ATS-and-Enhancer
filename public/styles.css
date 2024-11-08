@@ -40,7 +40,7 @@ body {
     border: solid black;
     border-radius: 20px;
 }
-#mainResult{
+#mainResult, #mainSuggestion{
     display: flex;
     flex-wrap: wrap;
     width: 90%;
