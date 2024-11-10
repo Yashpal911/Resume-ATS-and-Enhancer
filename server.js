@@ -5,6 +5,7 @@ const mammoth = require('mammoth');
 const Tesseract = require('tesseract.js');
 const fs = require('fs');
 const path = require('path');
+const { headingPattern, educationPattern} = require('./public/headings.js');
 const {
     GoogleGenerativeAI
   } = require("@google/generative-ai");
@@ -59,13 +60,19 @@ app.post('/parse', upload.single('file'), async (req, res) => {
         // Replace newlines with '#\n'
         let textWithHashes = text.replace(/\n/g, '#\n');
 
+   
+        
+
         // Extract specific details using regex
         const phoneNumberMatch = text.match(/\(?\+?\d{1,3}\)?[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/);
         const skillsMatch = textWithHashes.match(/Skills#?\s*[:\s]*(.*?)(?=\n(?:Experience|OtherHeading|Education)|$)/is);
-        const Summary = textWithHashes.match(/Summary#?\s*[:\s]*(.*?)(?=\n(?:Skills|Experience|OtherHeading|Education)|$)/is);
-        const educationMatch = textWithHashes.match(/Education#?\s*[:\s]*(.*?)(?=\n(?:Skills|Experience|OtherHeading)|$)/is);
+        const educationMatch = textWithHashes.match(new RegExp(`${educationPattern}#?\\s*[:\\s]*(.*?)(?=\\n(?:${headingPattern})|$)`, "is"));
+        const Summary = textWithHashes.match(new RegExp(`summary#?\s*[:\s]*(.*?)(?=\n(?:${headingPattern})|$)`,"is"));
 
-        let sum = Summary[1].trim()
+        let sum = (educationMatch && educationMatch[1]) ? educationMatch[1].trim() : 'error';
+        console.log(sum)
+
+
         const chatSession = model.startChat({
             generationConfig,
         //  safetySettings: Adjust safety settings
@@ -75,10 +82,6 @@ app.post('/parse', upload.single('file'), async (req, res) => {
           });
         
           const result = await chatSession.sendMessage(`provide me how much projects has been discussed within this resume ${text} (reply only number no text)`);
-          const result2 = await chatSession.sendMessage(`Check the grammer and is there any need of modification: ${sum} if ok then retrun true else return the modified string`);
-          const question = await chatSession.sendMessage(`provide some skills based on the given to enhance it "${skillsMatch[1].trim()}"`);
-         console.log(question.response.text())
-          // let resultt = result.response.text();
 
         // Check if the matches were found before calling .trim()
         res.json({
