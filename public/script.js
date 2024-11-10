@@ -137,13 +137,11 @@ uploadButton.addEventListener('click', async () => {
         });
         
         const data = await response.json();
-        resultdiv("phone number",data.phoneNumber || 'Not found')
+        
 
 
-
-        console.log('Text with hashes:', data.textWithHashes);
-        console.log('result:', data.result);
-        calculateScore(data.skills);       
+        
+        calculateScore(data.skills, data.projectCount);       
      
     } catch (error) {
         console.error('Error:', error);
@@ -191,7 +189,7 @@ function handleFileSelect(e) {
 
 
 // Calculate score based on job roles and skills
-function calculateScore(userSkills) {
+function calculateScore(userSkills, projectCount) {
     const jobRole = jobRoleSelect.value; // Assuming jobRoleSelect is a reference to the select input
     let totalScore = 0;
 
@@ -200,13 +198,21 @@ function calculateScore(userSkills) {
             job.skills.forEach(skill => {
                 if (userSkills.includes(skill)) {
                     totalScore++;
-                    console.log(skill)
                 }
             });
         }
     });
-
-    console.log(`Score for ${jobRole}:`, totalScore);
-    document.getElementById('score').innerText = totalScore;
-    return totalScore;
+    // if(projectCount<= 4){
+    //     totalScore = totalScore + 5;
+    //     console.log("project score increase by 5")
+    // }
+     if(projectCount<=2 && projectCount>4){
+        totalScore = totalScore + 3;
+        console.log("socre 2")
+    }
+    else if(projectCount >2){
+        totalScore = totalScore ++;
+    }
+   
+    resultdiv("score",totalScore)
 };
