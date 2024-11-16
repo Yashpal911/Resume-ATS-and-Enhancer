@@ -64,11 +64,14 @@ app.post('/parse', upload.single('file'), async (req, res) => {
         
 
         // Extract specific details using regex
+        const name = text.match(/\b([A-Z][a-z]*\s[A-Z][a-z]*)\b/g);
         const phoneNumberMatch = text.match(/\(?\+?\d{1,3}\)?[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/);
         const skillsMatch = textWithHashes.match(/Skills#?\s*[:\s]*(.*?)(?=\n(?:Experience|OtherHeading|Education)|$)/is);
         const educationMatch = textWithHashes.match(new RegExp(`${educationPattern}#?\\s*[:\\s]*(.*?)(?=\\n(?:${headingPattern})|$)`, "is"));
         const SummaryMatch = textWithHashes.match(new RegExp(`summary#?\s*[:\s]*(.*?)(?=\n(?:${headingPattern})|$)`,"is"));
 
+
+        console.log()
         const chatSession = model.startChat({
             generationConfig,
         //  safetySettings: Adjust safety settings
@@ -76,17 +79,19 @@ app.post('/parse', upload.single('file'), async (req, res) => {
             history: [
             ],
           });
-        
+        // Question to Gemini API
           const projectCount = await chatSession.sendMessage(`tell me the no. of projects mention in this resume ${text} (one word answer in interger)`);
-
+          const interships = await chatSession.sendMessage(`tell me the how much experince is gained in this resume ${text} (including interships and jobs. return only integer months form or return 0) `);
         // Check if the matches were found before calling .trim()
         res.json({
-            phoneNumber: phoneNumberMatch ? phoneNumberMatch[0] : 'Not found',
-            skills: skillsMatch && skillsMatch[1] ? skillsMatch[1].trim(): 'Not found',
-            Summary: SummaryMatch && SummaryMatch[1] ? SummaryMatch[1].trim(): 'Not found',
-            education: educationMatch && educationMatch[1] ? educationMatch[1].trim() : 'Not found',
+            phoneNumber: phoneNumberMatch ? phoneNumberMatch[0] : 'Null',
+            username: name ? name[0] : 'Null',
+            skills: skillsMatch && skillsMatch[1] ? skillsMatch[1].trim(): 'Null',
+            Summary: SummaryMatch && SummaryMatch[1] ? SummaryMatch[1].trim(): 'Null',
+            education: educationMatch && educationMatch[1] ? educationMatch[1].trim() : 'Null',
             projectCount: projectCount.response.text(),
-            // result2: result2.response.text()
+            intership: interships.response.text()
+          
         });
 
 

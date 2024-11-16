@@ -4,6 +4,15 @@ let resultHide = true;
 let suggestionhide = true;
 
 let resultSection = document.getElementById("results");
+
+
+let greetingSection = document.getElementById("greetings");
+
+// for greeting the user
+function greetings(name){
+    greetingSection.innerText=`Hello ${name}`
+}
+
 function resultdiv(branch, text){
     if(resultHide == true){
 
@@ -140,8 +149,9 @@ uploadButton.addEventListener('click', async () => {
         
 
 
+        greetings(data.username);
         
-        calculateScore(data.skills, data.projectCount);       
+        calculateScore(data.skills, data.projectCount, data.internship);       
      
     } catch (error) {
         console.error('Error:', error);
@@ -189,30 +199,66 @@ function handleFileSelect(e) {
 
 
 // Calculate score based on job roles and skills
-function calculateScore(userSkills, projectCount) {
+function calculateScore(userSkills, projectCount, experience) {
     const jobRole = jobRoleSelect.value; // Assuming jobRoleSelect is a reference to the select input
     let totalScore = 0;
+    let match = 0;
+    let result= " ";
 
     jobRoles.forEach(job => {
         if (job.role === jobRole) {
             job.skills.forEach(skill => {
                 if (userSkills.includes(skill)) {
-                    totalScore++;
+                    match++;
                 }
             });
         }
     });
-    // if(projectCount<= 4){
-    //     totalScore = totalScore + 5;
-    //     console.log("project score increase by 5")
-    // }
-     if(projectCount<=2 && projectCount>4){
-        totalScore = totalScore + 3;
-        console.log("socre 2")
+    // Score based on skills
+    if (match >= 1 && match <= 2) {
+        totalScore += 2;
+    } else if (match >= 3 && match <= 4) {
+        totalScore += 4;
+    } else if (match > 4) {
+        totalScore += 5;
     }
-    else if(projectCount >2){
-        totalScore = totalScore ++;
+
+    // Score based on project count
+    if (projectCount >= 1 && projectCount <= 2) {
+        totalScore += 2;
+    } else if (projectCount >= 3 && projectCount <= 4) {
+        totalScore += 4;
+    } else if (projectCount > 4) {
+        totalScore += 5;
     }
-   
-    resultdiv("score",totalScore)
+
+    // Score based on experience in terms of months
+    if (experience >= 0 && experience <= 24) {
+        totalScore += 2;
+    } else if (experience >= 25 && experience <= 48) {
+        totalScore += 4;
+    } else if (experience > 48) {
+        totalScore += 5;
+    }
+
+    // Project Based in social media
+        
+    
+
+
+    // End Result Based on totalScore
+    if(totalScore>=0 && totalScore<=4){
+        result = "Unsatisfactory";
+    } else if(totalScore>=5 && totalScore<=10){
+        result = "Below Average";
+    } else if(totalScore>=11 && totalScore<=14){
+        result = "Average"
+    } else if(totalScore>=15 && totalScore<=18){
+        result = "Impressive"
+    } else if(totalScore>=19 && totalScore<=20){
+        result = "Excellent"
+    }
+
+
+    resultdiv("Result score",`${result} and ${totalScore}`)
 };
