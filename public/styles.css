@@ -20,7 +20,6 @@ header {
     justify-content: space-between;
     align-items: center;
     height: 13vh;
-    width: 100vw;
     margin-bottom: 10px;
     
 }
@@ -40,19 +39,6 @@ nav {
     margin: 20px ;
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    flex: 1;
-    justify-content: center;
-}
-
-nav ul li {
-    color: #555;
-    cursor: pointer;
-}
-
 .build-resume-btn,
 .login-btn {
     background-color: #f05a28;
@@ -62,6 +48,7 @@ nav ul li {
     border-radius: 5px;
     cursor: pointer;
     margin-left: 10px;
+    text-decoration: none;
 }
 
 main {
@@ -119,8 +106,9 @@ p{
     line-height: 1.5em;
 }
 .container {
-    width: 99vw;
     height:60vh;
+    width:  100vw;
+    margin: auto;
     background-color: #f36a31;
     padding: 20px;
     border-radius: 10px;
@@ -228,9 +216,9 @@ h1 {
 
     .upload-btn,
     .parse-btn {
-        width: 100%;
         padding: 10px;
     }
+   
 }
 
 @media (max-width: 480px) {
@@ -259,6 +247,7 @@ h1 {
         flex-direction: column;
         font-size: 10px;
     }
+    
 }
 
 .drop-zone {
@@ -270,7 +259,7 @@ h1 {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    width: 50%;
+    width: 80%;
     margin: auto;
 }
 

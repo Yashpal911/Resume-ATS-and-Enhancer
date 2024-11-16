@@ -151,7 +151,7 @@ uploadButton.addEventListener('click', async () => {
 
         greetings(data.username);
         
-        calculateScore(data.skills, data.projectCount, data.internship);       
+        calculateScore(data.skills);       
      
     } catch (error) {
         console.error('Error:', error);
