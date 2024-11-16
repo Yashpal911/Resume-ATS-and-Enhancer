@@ -1,65 +1,44 @@
+const jobRole = jobRoleSelect.value; // Assuming jobRoleSelect is a reference to the select input
+    
 
 // container under result
-let resultHide = true;
 let suggestionhide = true;
 
 let resultSection = document.getElementById("results");
+let suggestionSection = document.getElementById("suggestions");
 
 
-let greetingSection = document.getElementById("greetings");
 
-// for greeting the user
-function greetings(name){
-    greetingSection.innerText=`Hello ${name}`
-}
+function resultdiv(result, score , name){
+    
+    resultSection.classList.add("resultsDecoration");
+    
+    const resultHeading = document.createElement("h3");
+    resultHeading.innerText = `Hello ${name}, Based on Your Resume, Your ATS score is ${result}`;
+    resultSection.appendChild(resultHeading);
+    const section = document.createElement("h3");
+    section.setAttribute("class","result_div");
+    section.innerText = `Your ATS score is ${score} out of 10`;
+    resultSection.appendChild(section);
 
-function resultdiv(branch, text){
-    if(resultHide == true){
-
-        resultSection.classList.add("resultsDecoration");
-
-        const resultHeading = document.createElement("h1");
-        resultHeading.innerText = `Result`;
-        resultSection.appendChild(resultHeading);
-        let div = document.createElement("div");
-        div.setAttribute("id","mainResult")
-        resultSection.appendChild(div);
-
-        
-        const section = document.createElement("p");
-        section.setAttribute("class","result_div")
-        section.innerText = `${branch} :: ${text}`;
-        document.getElementById("mainResult").appendChild(section);
-
-        resultHide = false;
-
-    }
-
-    else{
-        const section = document.createElement("p");
-        section.setAttribute("class","result_div")
-        section.innerText = `${branch} :: ${text}`;
-        document.getElementById("mainResult").appendChild(section);
-    }
 
 }
-
 
 // container under suggestion suggestions
 function suggestionDetails(heading,text,modifiedText){
     if(suggestionhide==true){
-        resultSection.classList.add("SuggestionDecoration");
+        suggestionSection.classList.add("SuggestionDecoration");
 
-        const SuggestionHeading = document.createElement("h1");
+        const SuggestionHeading = document.createElement("h2");
         SuggestionHeading.innerText = `Suggestions`;
-        resultSection.appendChild(SuggestionHeading);
-        let div = document.createElement("p");
+        suggestionSection.appendChild(SuggestionHeading);
+        let div = document.createElement("div");
         div.setAttribute("id","mainSuggestion")
-        resultSection.appendChild(div);
+        suggestionSection.appendChild(div);
 
-        const section = document.createElement("p");
+        const section = document.createElement("div");
         section.setAttribute("class","suggestions_div")
-        section.innerHTML = `hello`;
+        section.innerHTML = `<h3 class="Sheading>${heading}</h3>`;
         document.getElementById("mainSuggestion").appendChild(section);
 
         suggestionhide = false;
@@ -73,6 +52,12 @@ function suggestionDetails(heading,text,modifiedText){
     }
 }
 
+function removeExtra(){
+    const container = document.querySelector(".container")    
+    const mainSection = document.querySelector("main");        
+    container.classList.add("hide")
+    mainSection.classList.add("hide")
+}
 
 const dropZone = document.getElementById('dropZone');
 const uploadButton = document.getElementById('uploadButton');
@@ -147,11 +132,10 @@ uploadButton.addEventListener('click', async () => {
         
         const data = await response.json();
         
+        removeExtra();
 
-
-        greetings(data.username);
         
-        calculateScore(data.skills);       
+        calculateScore(data.skills,data.projectCount, data.experience, data.name);       
      
     } catch (error) {
         console.error('Error:', error);
@@ -199,8 +183,7 @@ function handleFileSelect(e) {
 
 
 // Calculate score based on job roles and skills
-function calculateScore(userSkills, projectCount, experience) {
-    const jobRole = jobRoleSelect.value; // Assuming jobRoleSelect is a reference to the select input
+function calculateScore(userSkills, projectCount, experience, name) {
     let totalScore = 0;
     let match = 0;
     let result= " ";
@@ -259,6 +242,8 @@ function calculateScore(userSkills, projectCount, experience) {
         result = "Excellent"
     }
 
+    totalScore = (totalScore * 5) / 10;
 
-    resultdiv("Result score",`${result} and ${totalScore}`)
+
+    resultdiv(`${result}`,`${totalScore}`,`${name}`)
 };

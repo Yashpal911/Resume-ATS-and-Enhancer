@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const { headingPattern, educationPattern} = require('./public/headings.js');
 const {
-    GoogleGenerativeAI
+      GoogleGenerativeAI
   } = require("@google/generative-ai");
   
   const apiKey = 'AIzaSyA2yYzR13Dm1zL3PURIEflCpPx8Rbm87gY';
@@ -16,7 +16,7 @@ const {
   const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
   });
-  
+
   const generationConfig = {
     temperature: 1,
     topP: 0.95,

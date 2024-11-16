@@ -271,11 +271,18 @@ h1 {
     border-color: green;
 }
 
-.resultsDecoration, .suggestionsDe{
+.resultsDecoration, .SuggestionDecoration{
     width: 80%;
     margin: 10px auto;
     border: solid black;
     border-radius: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+.resultsDecoration h3{
+    text-align: center;
+    padding: 10px;
 }
 #mainResult, #mainSuggestion{
     display: flex;
@@ -287,7 +294,12 @@ h1 {
     justify-content: space-evenly;
 }
 
-.result_div, .suggestions_div{
+.result_div{
+    height: auto;
+    padding: 20px;
+    width: auto;
+}
+.suggestions_div{
 border: solid grey;
 border-radius: 10px;
 height: auto;
@@ -295,9 +307,7 @@ padding: 20px;
 width: auto;
 }
 
-.result_div:hover, .suggestions_div:hover{
-     border: solid black;
-}
+
 
 .hide{
     display: none;
@@ -309,4 +319,12 @@ width: auto;
 
 .info{
     padding: 40px;
+}
+
+.Output{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
