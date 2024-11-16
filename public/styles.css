@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    scroll-behavior:smooth;
 }
 
 body {
@@ -18,7 +19,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 15vh;
+    height: 13vh;
     width: 100vw;
     margin-bottom: 10px;
     
@@ -104,7 +105,7 @@ main {
     font-size: 1em;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;
+    margin: 30px;
 }
 
  h2{
@@ -168,6 +169,20 @@ h1 {
 
 .upload-btn:hover {
     background-color: #e55a22;
+}
+
+.job-select{
+    border-top: 1px solid black;
+    padding: 40px;
+}
+.job-select label{
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+}
+#jobrole{
+    padding: 10px;
+    border-radius: 5px;
 }
 
    
@@ -245,10 +260,15 @@ h1 {
         font-size: 10px;
     }
 }
+
 .drop-zone {
     border: 2px dashed #5B7553;
     padding: 40px;
     margin: 20px 0;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     width: 50%;
     margin: auto;
@@ -296,4 +316,8 @@ width: auto;
 
 .show{
     display: block;
+}
+
+.info{
+    padding: 40px;
 }
