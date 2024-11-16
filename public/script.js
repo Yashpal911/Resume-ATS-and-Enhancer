@@ -242,7 +242,7 @@ function calculateScore(userSkills, projectCount, experience) {
     }
 
     // Project Based in social media
-        
+    
     
 
 

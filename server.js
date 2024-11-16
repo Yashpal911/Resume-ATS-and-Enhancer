@@ -10,7 +10,7 @@ const {
     GoogleGenerativeAI
   } = require("@google/generative-ai");
   
-  const apiKey = 'AIzaSyB_1rt2G-Py9SA4UOLuHM5dgyBmYeJyW9g';
+  const apiKey = 'AIzaSyAW6nZI8pAjQ5C-ip13MwB-BeZ_2u7fUsA';
   const genAI = new GoogleGenerativeAI(apiKey);
   
   const model = genAI.getGenerativeModel({
@@ -60,8 +60,13 @@ app.post('/parse', upload.single('file'), async (req, res) => {
         // Replace newlines with '#\n'
         let textWithHashes = text.replace(/\n/g, '#\n');
 
-   
-        
+        // Social media
+        const github = text.match(/github/gi);
+        const facebook = text.match(/facebook/gi);
+        const linkedin = text.match(/linkedin/gi);
+        const twitter = text.match(/twitter/gi);
+        const instagram = text.match(/instagram/gi);
+
 
         // Extract specific details using regex
         const name = text.match(/\b([A-Z][a-z]*\s[A-Z][a-z]*)\b/g);
