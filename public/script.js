@@ -1,4 +1,4 @@
-const jobRole = jobRoleSelect.value; // Assuming jobRoleSelect is a reference to the select input
+
     
 
 // container under result
@@ -10,6 +10,8 @@ let suggestionSection = document.getElementById("suggestions");
 
 
 function resultdiv(result, score , name){
+    
+    removeExtra();
     
     resultSection.classList.add("resultsDecoration");
     
@@ -26,31 +28,30 @@ function resultdiv(result, score , name){
 
 // container under suggestion suggestions
 function suggestionDetails(heading,text,modifiedText){
+
+
+    
     if(suggestionhide==true){
-        suggestionSection.classList.add("SuggestionDecoration");
+        suggestionSection.classList.remove("hide");
 
-        const SuggestionHeading = document.createElement("h2");
-        SuggestionHeading.innerText = `Suggestions`;
-        suggestionSection.appendChild(SuggestionHeading);
-        let div = document.createElement("div");
-        div.setAttribute("id","mainSuggestion")
-        suggestionSection.appendChild(div);
-
-        const section = document.createElement("div");
+        const section = document.createElement("li");
         section.setAttribute("class","suggestions_div")
-        section.innerHTML = `<h3 class="Sheading>${heading}</h3>`;
-        document.getElementById("mainSuggestion").appendChild(section);
+        section.innerHTML = `<h3> ${heading}</h3> <p>${text}</p> <p> ${modifiedText}</p>`;
+        document.getElementById("projectSuggestion").appendChild(section);
 
         suggestionhide = false;
     }
 
     else{
-    const section = document.createElement("p");
-    section.setAttribute("class","suggestions_div")
-    section.innerText = `helllo`;
-    document.getElementById("mainSuggestion").appendChild(section);
+
+        const section = document.createElement("li");
+        section.setAttribute("class","suggestions_div")
+        section.innerHTML = `<h3> ${heading}</h3> <p>${text}</p> <p> ${modifiedText}</p>`;
+        document.getElementById("projectSuggestion").appendChild(section);
+
     }
 }
+
 
 function removeExtra(){
     const container = document.querySelector(".container")    
@@ -132,10 +133,7 @@ uploadButton.addEventListener('click', async () => {
         
         const data = await response.json();
         
-        removeExtra();
-
-        
-        calculateScore(data.skills,data.projectCount, data.experience, data.name);       
+        calculateScore(data.skills,data.projectCount, data.experience, data.username, data.socialMedia , data.internship);       
      
     } catch (error) {
         console.error('Error:', error);
@@ -183,7 +181,9 @@ function handleFileSelect(e) {
 
 
 // Calculate score based on job roles and skills
-function calculateScore(userSkills, projectCount, experience, name) {
+function calculateScore(userSkills, projectCount, experience, name ,socialMedia, intership) {
+    
+    const jobRole = jobRoleSelect.value; // Assuming jobRoleSelect is a reference to the select input
     let totalScore = 0;
     let match = 0;
     let result= " ";
@@ -193,10 +193,12 @@ function calculateScore(userSkills, projectCount, experience, name) {
             job.skills.forEach(skill => {
                 if (userSkills.includes(skill)) {
                     match++;
+                    console.log(skill)
                 }
             });
         }
     });
+    console.log(match)
     // Score based on skills
     if (match >= 1 && match <= 2) {
         totalScore += 2;
@@ -205,6 +207,7 @@ function calculateScore(userSkills, projectCount, experience, name) {
     } else if (match > 4) {
         totalScore += 5;
     }
+
 
     // Score based on project count
     if (projectCount >= 1 && projectCount <= 2) {
@@ -215,8 +218,10 @@ function calculateScore(userSkills, projectCount, experience, name) {
         totalScore += 5;
     }
 
+
+
     // Score based on experience in terms of months
-    if (experience >= 0 && experience <= 24) {
+    if (experience >= 0 && experience <= 12) {
         totalScore += 2;
     } else if (experience >= 25 && experience <= 48) {
         totalScore += 4;
@@ -224,26 +229,54 @@ function calculateScore(userSkills, projectCount, experience, name) {
         totalScore += 5;
     }
 
-    // Project Based in social media
-    
-    
+    // score based in interships
+    if(intership>=0 && intership<=2){
+        totalScore += 3;
+        }
+        else if(intership>=3){
+            totalScore += 4;
+        }
 
+
+    // Project Based in social media
+    if (socialMedia >= 0 && socialMedia <= 2) {
+        totalScore += 2;
+    } else if (socialMedia >= 3 && socialMedia <= 4) {
+        totalScore += 4;
+    } else if (socialMedia >4) {
+        totalScore += 5;
+    }
+
+    totalScore = (totalScore * 4) / 10;
 
     // End Result Based on totalScore
-    if(totalScore>=0 && totalScore<=4){
+    if(totalScore>=0 && totalScore<=3){
         result = "Unsatisfactory";
-    } else if(totalScore>=5 && totalScore<=10){
+    } else if(totalScore>3 && totalScore<=5){
         result = "Below Average";
-    } else if(totalScore>=11 && totalScore<=14){
+    } else if(totalScore>6 && totalScore<=7){
         result = "Average"
-    } else if(totalScore>=15 && totalScore<=18){
-        result = "Impressive"
-    } else if(totalScore>=19 && totalScore<=20){
+    } else if(totalScore>7 && totalScore<=9){
+        result = "Good"
+    } else if(totalScore>9 && totalScore<=10){
         result = "Excellent"
     }
 
-    totalScore = (totalScore * 5) / 10;
+    jobRoles.forEach(job => {
+        if (job.role === jobRole) {
+            job.projects.forEach(project => {
+                suggestionDetails(`Adding more project like ${project.name}`, `Details : ${project.description}`,`Technologies: ${project.technologies}`);
+            
+            });
+        }
+    });
 
 
-    resultdiv(`${result}`,`${totalScore}`,`${name}`)
+    console.log(`after updating ${totalScore}`)
+   
+
+    resultdiv(result,totalScore,name)
+
+    
+    
 };
