@@ -25,32 +25,29 @@ function resultdiv(result, score , name){
 
 
 }
+function createSuggestionBox(){
+    if(suggestionhide==true){
+        suggestionSection.classList.remove("hide");
+        suggestionhide = false;
+    }
+}
 
 // container under suggestion suggestions
-function suggestionDetails(heading,text,modifiedText){
+function ProjectDetails(heading,text,modifiedText){
 
 
     
-    if(suggestionhide==true){
-        suggestionSection.classList.remove("hide");
+  createSuggestionBox()
 
         const section = document.createElement("li");
         section.setAttribute("class","suggestions_div")
         section.innerHTML = `<h3> ${heading}</h3> <p>${text}</p> <p> ${modifiedText}</p>`;
         document.getElementById("projectSuggestion").appendChild(section);
 
-        suggestionhide = false;
-    }
-
-    else{
-
-        const section = document.createElement("li");
-        section.setAttribute("class","suggestions_div")
-        section.innerHTML = `<h3> ${heading}</h3> <p>${text}</p> <p> ${modifiedText}</p>`;
-        document.getElementById("projectSuggestion").appendChild(section);
-
-    }
 }
+
+removeExtra()
+ProjectDetails()
 
 
 function removeExtra(){
@@ -238,7 +235,7 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
         }
 
 
-    // Project Based in social media
+    //Based in social media
     if (socialMedia >= 0 && socialMedia <= 2) {
         totalScore += 2;
     } else if (socialMedia >= 3 && socialMedia <= 4) {
@@ -247,8 +244,8 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
         totalScore += 5;
     }
 
-    totalScore = (totalScore * 4) / 10;
-
+    totalScore = Math.round((totalScore * 4) / 10);
+    
     // End Result Based on totalScore
     if(totalScore>=0 && totalScore<=3){
         result = "Unsatisfactory";
@@ -261,15 +258,19 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
     } else if(totalScore>9 && totalScore<=10){
         result = "Excellent"
     }
+    
 
+    if(projectCount<4){
     jobRoles.forEach(job => {
         if (job.role === jobRole) {
             job.projects.forEach(project => {
-                suggestionDetails(`Adding more project like ${project.name}`, `Details : ${project.description}`,`Technologies: ${project.technologies}`);
+                ProjectDetails(`${project.name}`, `Details : ${project.description}`,`Technologies: ${project.technologies}`);
             
             });
         }
     });
+    }
+    
 
 
     console.log(`after updating ${totalScore}`)
