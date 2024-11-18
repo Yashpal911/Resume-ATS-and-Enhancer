@@ -46,9 +46,6 @@ function ProjectDetails(heading,text,modifiedText){
 
 }
 
-removeExtra()
-ProjectDetails()
-
 
 function removeExtra(){
     const container = document.querySelector(".container")    
@@ -214,7 +211,7 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
     } else if (projectCount > 4) {
         totalScore += 5;
     }
-
+    
 
 
     // Score based on experience in terms of months
@@ -260,7 +257,6 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
     }
     
 
-    if(projectCount<4){
     jobRoles.forEach(job => {
         if (job.role === jobRole) {
             job.projects.forEach(project => {
@@ -269,8 +265,6 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
             });
         }
     });
-    }
-    
 
 
     console.log(`after updating ${totalScore}`)
