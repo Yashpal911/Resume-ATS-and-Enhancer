@@ -60,12 +60,7 @@ app.post('/parse', upload.single('file'), async (req, res) => {
         // Replace newlines with '#\n'
         let textWithHashes = text.replace(/\n/g, '#\n');
 
-        // // Social media
-        // const github = text.match(/github/gi);
-        // const facebook = text.match(/facebook/gi);
-        // const linkedin = text.match(/linkedin/gi);
-        // const twitter = text.match(/twitter/gi);
-        // const instagram = text.match(/instagram/gi);
+    
 
 
         // Extract specific details using regex
@@ -84,24 +79,27 @@ app.post('/parse', upload.single('file'), async (req, res) => {
             history: [
             ],
           });
+          const Summary = SummaryMatch && SummaryMatch[1] ? SummaryMatch[1].trim(): 'Null';
         // Question to Gemini API
           const projectCount = await chatSession.sendMessage(`tell me the no. of projects mention in this resume ${text} (one word answer in interger)`);
           const experience = await chatSession.sendMessage(`tell me the how much experince is gained in this resume ${text} (including interships and jobs. return only integer months form or return 0) `);
           const intership = await chatSession.sendMessage(`tell me the number of interships done in this resume "${text}" (return only interger value or return 0)`)
           const socialMedia = await chatSession.sendMessage(`tell me how much many social media links is given in this resume "${text}" (return only integer value or return 0)`)
-         
+          const summaryCheck = await chatSession.sendMessage(`paraphrase ${Summary} in a professional way`);
+          
+
         // Check if the matches were found before calling .trim()
         res.json({
             phoneNumber: phoneNumberMatch ? phoneNumberMatch[0] : 'Null',
             username: name ? name[0] : 'Null',
             skills: skillsMatch && skillsMatch[1] ? skillsMatch[1].trim(): 'Null',
-            Summary: SummaryMatch && SummaryMatch[1] ? SummaryMatch[1].trim(): 'Null',
             education: educationMatch && educationMatch[1] ? educationMatch[1].trim() : 'Null',
             projectCount: projectCount.response.text(),
             experience: experience.response.text(),
             internship: intership.response.text(),
             socialMedia: socialMedia.response.text(),
 
+            Summary: summaryCheck.response.text()
             
         
         });

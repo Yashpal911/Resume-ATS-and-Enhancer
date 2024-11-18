@@ -1,4 +1,4 @@
-const headings = ["Skills", "Experience", "OtherHeading"]; // Add any additional headings to this array
+const headings = ["Skills", "Experience", "OtherHeading","education"]; // Add any additional headings to this array
 const headingPattern = headings.join("|"); // Join the array items with "|"
 
 const education = ["qualification","education","academics","academics profile"]

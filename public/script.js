@@ -64,6 +64,16 @@ function SkillDetails(skills){
         document.getElementById("skillsSuggestion").appendChild(section);
 
 }
+function SummaryDetails(Summary){
+  createSuggestionBox()
+  document.getElementById("summarySuggestion").classList.remove("hide");
+
+        const section = document.createElement("span");
+        section.setAttribute("class","suggestions_div")
+        section.innerHTML = `${Summary}`;
+        document.getElementById("summarySuggestion").appendChild(section);
+
+}
 
 
 function removeExtra(){
@@ -147,6 +157,10 @@ uploadButton.addEventListener('click', async () => {
         const data = await response.json();
         
         calculateScore(data.skills,data.projectCount, data.experience, data.username, data.socialMedia , data.internship);       
+
+        SummaryDetails(data.Summary)
+
+
      
     } catch (error) {
         console.error('Error:', error);
