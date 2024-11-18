@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    
+
     <header>
         <nav>
             <div class="logo">Resume Enhancer</div>
@@ -27,8 +27,10 @@
 
     <main>
         <section class="description" id="main">
-            <p>Worried that applicant tracking system (ATS) software won’t be able to accurately scan your resume? Our online resume parser instantly scans each section of your resume to confirm your <a>resume is ATS-friendly</a>.</p>
-            
+            <p>Worried that applicant tracking system (ATS) software won’t be able to accurately scan your resume? Our
+                online resume parser instantly scans each section of your resume to confirm your <a>resume is
+                    ATS-friendly</a>.</p>
+
             <div class="job-select">
                 <input type="file" id="fileInput" accept=".pdf, .docx, .jpg, .png" style="display: none;">
                 <label for="jobrole">Select Job Role:</label>
@@ -43,29 +45,36 @@
             </div>
 
             <button type="submit" id="uploadButton" class="parse-btn">Upload and Parse</button>
-            
+
         </section>
         <section class="info">
             <h2>What does a resume parser do?</h2>
             <p>
-                A resume parser scans your resume and extracts information about you and your background, such as what university you attended, what skills you have, and what job titles you’ve had
+                A resume parser scans your resume and extracts information about you and your background, such as what
+                university you attended, what skills you have, and what job titles you’ve had
 
             </p>
             <br>
-            <p>Many employers use ATS with resume parsing features to quickly go through large amounts of applications and identify suitable applicants.</p>
+            <p>Many employers use ATS with resume parsing features to quickly go through large amounts of applications
+                and identify suitable applicants.</p>
             <br>
 
-            <p>As a job seeker, by putting your resume through a parser before submitting your application, you can find and fix formatting errors that could make it difficult for ATS to scan your resume. This way, you ensure your qualifications are properly presented to employers.</p>
+            <p>As a job seeker, by putting your resume through a parser before submitting your application, you can find
+                and fix formatting errors that could make it difficult for ATS to scan your resume. This way, you ensure
+                your qualifications are properly presented to employers.</p>
         </section>
 
     </main>
     <section class="Output">
         <div id="results"></div>
         <div id="suggestions" class="SuggestionDecoration hide">
-            <h3>To Make Your Resume more ATS friendly</h3>
-            <ul id="projectSuggestion">
+            <h2>To Make Your Resume more ATS friendly</h2>
+            <ul id="projectSuggestion" class="suggestions_inner hide">
                 <h3>You can work on these projects and include them on your resume.</h3>
-            </ul>   
+            </ul>
+            <div id="SocialMediaSuggestion" class="suggestions_inner hide"></div>
+            <div id="skillsSuggestion" class="suggestions_inner hide"></div>
+
         </div>
     </section>
 

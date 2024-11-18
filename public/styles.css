@@ -307,7 +307,7 @@ h1 {
     margin: 20px;
     width: auto;
 }
-#projectSuggestion{
+.suggestions_inner{
     margin: 20px;
     padding: 20px;
     border: solid grey;

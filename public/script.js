@@ -34,15 +34,34 @@ function createSuggestionBox(){
 
 // container under suggestion suggestions
 function ProjectDetails(heading,text,modifiedText){
-
-
-    
   createSuggestionBox()
+  document.getElementById("projectSuggestion").classList.remove("hide");
 
         const section = document.createElement("li");
         section.setAttribute("class","suggestions_div")
         section.innerHTML = `<h3> ${heading}</h3> <p>${text}</p> <p> ${modifiedText}</p>`;
         document.getElementById("projectSuggestion").appendChild(section);
+
+}
+
+function socialMediaDetails(){
+  createSuggestionBox()
+  document.getElementById("SocialMediaSuggestion").classList.remove("hide");
+
+        const section = document.createElement("div");
+        section.setAttribute("class","suggestions_div")
+        section.innerHTML = `<h3>You can add Your social media icons</h3>`;
+        document.getElementById("SocialMediaSuggestion").appendChild(section);
+
+}
+function SkillDetails(skills){
+  createSuggestionBox()
+  document.getElementById("skillsSuggestion").classList.remove("hide");
+
+        const section = document.createElement("span");
+        section.setAttribute("class","suggestions_div")
+        section.innerHTML = `${skills}`;
+        document.getElementById("skillsSuggestion").appendChild(section);
 
 }
 
@@ -187,7 +206,6 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
             job.skills.forEach(skill => {
                 if (userSkills.includes(skill)) {
                     match++;
-                    console.log(skill)
                 }
             });
         }
@@ -248,29 +266,33 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
         result = "Unsatisfactory";
     } else if(totalScore>3 && totalScore<=5){
         result = "Below Average";
-    } else if(totalScore>6 && totalScore<=7){
+    } else if(totalScore>5 && totalScore<=7){
         result = "Average"
     } else if(totalScore>7 && totalScore<=9){
         result = "Good"
     } else if(totalScore>9 && totalScore<=10){
         result = "Excellent"
     }
+   
     
+    resultdiv(result,totalScore,name)
+
 
     jobRoles.forEach(job => {
         if (job.role === jobRole) {
             job.projects.forEach(project => {
                 ProjectDetails(`${project.name}`, `Details : ${project.description}`,`Technologies: ${project.technologies}`);
-            
+
+            });
+            job.skills.forEach(skill=>{
+                SkillDetails(skill);
             });
         }
     });
 
 
-    console.log(`after updating ${totalScore}`)
    
 
-    resultdiv(result,totalScore,name)
 
     
     
