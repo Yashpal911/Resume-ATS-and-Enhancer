@@ -64,13 +64,13 @@ function SkillDetails(skills){
         document.getElementById("skillsSuggestion").appendChild(section);
 
 }
-function SummaryDetails(Summary){
+function SummaryDetails(Summary, UpdatedSummary){
   createSuggestionBox()
   document.getElementById("summarySuggestion").classList.remove("hide");
 
         const section = document.createElement("span");
         section.setAttribute("class","suggestions_div")
-        section.innerHTML = `${Summary}`;
+        section.innerHTML = `<p>instead of this "${Summary}"</p></br> <p>try this "${UpdatedSummary}"</p>`;
         document.getElementById("summarySuggestion").appendChild(section);
 
 }
@@ -139,6 +139,7 @@ uploadButton.addEventListener('click', async () => {
     
     const formData = new FormData();
     formData.append('file', selectedFile);
+    formData.append('jobRole', jobRoleSelect.value);
     
     // SHOW LODAING INDICATOR
     const loadingMessage = document.createElement('p');
@@ -158,7 +159,7 @@ uploadButton.addEventListener('click', async () => {
         
         calculateScore(data.skills,data.projectCount, data.experience, data.username, data.socialMedia , data.internship);       
 
-        SummaryDetails(data.Summary)
+        SummaryDetails(data.Summary, data.UpdatedSummary)
 
 
      
