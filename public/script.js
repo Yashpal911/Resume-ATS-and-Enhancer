@@ -20,7 +20,7 @@ function resultdiv(result, score , name){
     resultSection.appendChild(resultHeading);
     const section = document.createElement("h3");
     section.setAttribute("class","result_div");
-    section.innerText = `Your ATS score is ${score} out of 10`;
+    section.innerText = `Your ATS score is ${score} out of 100`;
     resultSection.appendChild(section);
 
 
@@ -70,7 +70,17 @@ function SummaryDetails(Summary, UpdatedSummary){
 
         const section = document.createElement("span");
         section.setAttribute("class","suggestions_div")
-        section.innerHTML = `<p>instead of this "${Summary}"</p></br> <p>try this "${UpdatedSummary}"</p>`;
+        section.innerHTML = `<p>The Overall Profile Summary of your shared resume is "${Summary.strike()}" which is not Suitable for your Job. </p></br> <p>Use this Updated Version To improve Your ATS Score "${UpdatedSummary}"</p>`;
+        document.getElementById("summarySuggestion").appendChild(section);
+
+}
+function FalseSummaryDetails(UpdatedSummary){
+  createSuggestionBox()
+  document.getElementById("summarySuggestion").classList.remove("hide");
+
+        const section = document.createElement("span");
+        section.setAttribute("class","suggestions_div")
+        section.innerHTML = `<p>Add an Overall Profile section in your resume to improve Your ATS Score "${UpdatedSummary}"</p>`;
         document.getElementById("summarySuggestion").appendChild(section);
 
 }
@@ -159,7 +169,12 @@ uploadButton.addEventListener('click', async () => {
         
         calculateScore(data.skills,data.projectCount, data.experience, data.username, data.socialMedia , data.internship);       
 
-        SummaryDetails(data.Summary, data.UpdatedSummary)
+        if(data.SummaryCheck == "False"){
+            FalseSummaryDetails(data.UpdatedSummary)
+        }
+        else{
+            SummaryDetails(data.Summary, data.UpdatedSummary)
+        }
 
 
      
@@ -274,23 +289,24 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
         totalScore += 5;
     }
 
-    totalScore = Math.round((totalScore * 4) / 10);
+    AverageScore = Math.round((totalScore * 4) / 10);
     
     // End Result Based on totalScore
-    if(totalScore>=0 && totalScore<=3){
+    if(AverageScore>=0 && AverageScore<=3){
         result = "Unsatisfactory";
-    } else if(totalScore>3 && totalScore<=5){
+    } else if(AverageScore>3 && AverageScore<=5){
         result = "Below Average";
-    } else if(totalScore>5 && totalScore<=7){
+    } else if(AverageScore>5 && AverageScore<=7){
         result = "Average"
-    } else if(totalScore>7 && totalScore<=9){
+    } else if(AverageScore>7 && AverageScore<=9){
         result = "Good"
-    } else if(totalScore>9 && totalScore<=10){
+    } else if(AverageScore>9 && AverageScore<=10){
         result = "Excellent"
     }
-   
+
+   let Score = totalScore*4 ; 
     
-    resultdiv(result,totalScore,name)
+    resultdiv(result,Score,name)
 
 
     jobRoles.forEach(job => {
@@ -300,7 +316,12 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
 
             });
             job.skills.forEach(skill=>{
-                SkillDetails(skill);
+                if (userSkills.includes(skill)) {
+                    console.log(`${skill} founded`)
+                }
+                else{
+                    SkillDetails(skill);
+                }
             });
         }
     });
