@@ -5,7 +5,7 @@ const mammoth = require('mammoth');
 const Tesseract = require('tesseract.js');
 const fs = require('fs');
 const path = require('path');
-const { headingPattern, educationPattern } = require('./public/headings.js');
+const { headingPattern, educationPattern, skillsPattern , summaryPattern} = require('./public/headings.js');
 const {
     GoogleGenerativeAI
 } = require("@google/generative-ai");
@@ -68,12 +68,12 @@ app.post('/parse', upload.single('file'), async (req, res) => {
         // Extract specific details using regex
         const name = text.match(/\b([A-Z][a-z]*\s[A-Z][a-z]*)\b/g);
         const phoneNumberMatch = text.match(/\(?\+?\d{1,3}\)?[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/);
-        const skillsMatch = textWithHashes.match(/Skills#?\s*[:\s]*(.*?)(?=\n(?:Experience|OtherHeading|Education)|$)/is);
+        const skillsMatch = textWithHashes.match(new RegExp(`${skillsPattern}#?\\s*[:\\s]*(.*?)(?=\\n(?:${headingPattern})|$)`, "is"));
         const educationMatch = textWithHashes.match(new RegExp(`${educationPattern}#?\\s*[:\\s]*(.*?)(?=\\n(?:${headingPattern})|$)`, "is"));
-        const SummaryMatch = textWithHashes.match(new RegExp(`summary#?\s*[:\s]*(.*?)(?=\n(?:${headingPattern})|$)`, "is"));
+        const SummaryMatch = textWithHashes.match(new RegExp(`${summaryPattern}#?\s*[:\s]*(.*?)(?=\n(?:${headingPattern})|$)`, "is"));
 
 
-        console.log(jobRole);
+        
         const chatSession = model.startChat({
             generationConfig,
             //  safetySettings: Adjust safety settings
@@ -81,14 +81,13 @@ app.post('/parse', upload.single('file'), async (req, res) => {
             history: [
             ],
         });
-        const Summary = SummaryMatch && SummaryMatch[1] ? SummaryMatch[1].trim() : 'Null';
+        
         // Question to Gemini API
         const projectCount = await chatSession.sendMessage(`tell me the no. of projects mention in this resume ${text} (one word answer in interger)`);
         const experience = await chatSession.sendMessage(`tell me the how much experince is gained in this resume ${text} (including interships and jobs. return only integer months form or return 0) `);
         const intership = await chatSession.sendMessage(`tell me the number of interships done in this resume "${text}" (return only interger value or return 0)`)
         const socialMedia = await chatSession.sendMessage(`tell me how much many social media links is given in this resume "${text}" (return only integer value or return 0)`)
 
-        const summaryCheck = await chatSession.sendMessage(`check weather the overview "${Summary}" belongs to the "${jobRole}" (Return "True" or "False") `);
         const summaryUpdated = await chatSession.sendMessage(`update the overview Profile Summary for resume to make it more suitable for the "${jobRole}" (keep short & provide just result not multiple)`)
 
 

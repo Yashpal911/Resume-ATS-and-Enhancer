@@ -1,13 +1,29 @@
+window.onload = function () {
 
-    
+window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // Optional: Adds a smooth scrolling effect
+  });
+
+
+  };
+  
 
 // container under result
 let suggestionhide = true;
 
 let resultSection = document.getElementById("results");
 let suggestionSection = document.getElementById("suggestions");
+let start = true;
 
 
+function btn2(){
+    if(start == false){
+        location.reload();
+        start = true;
+
+           }
+}
 
 function resultdiv(result, score , name){
     
@@ -50,7 +66,7 @@ function socialMediaDetails(){
 
         const section = document.createElement("div");
         section.setAttribute("class","suggestions_div")
-        section.innerHTML = `<h3>You can add Your social media icons</h3>`;
+        section.innerHTML = `<h3>Add more links to your Social Media profiles such as Linkedin, Github, Personal Portfolio, Twitter, etc.</h3>`;
         document.getElementById("SocialMediaSuggestion").appendChild(section);
 
 }
@@ -58,9 +74,9 @@ function SkillDetails(skills){
   createSuggestionBox()
   document.getElementById("skillsSuggestion").classList.remove("hide");
 
-        const section = document.createElement("span");
+        const section = document.createElement("ul");
         section.setAttribute("class","suggestions_div")
-        section.innerHTML = `${skills}`;
+        section.innerHTML = `<li>${skills}</li>`;
         document.getElementById("skillsSuggestion").appendChild(section);
 
 }
@@ -70,20 +86,16 @@ function SummaryDetails(Summary, UpdatedSummary){
 
         const section = document.createElement("span");
         section.setAttribute("class","suggestions_div")
-        section.innerHTML = `<p>The Overall Profile Summary of your shared resume is "${Summary.strike()}" which is not Suitable for your Job. </p></br> <p>Use this Updated Version To improve Your ATS Score "${UpdatedSummary}"</p>`;
+        if(Summary == "Null"){
+            section.innerHTML = `<p>Add an Overall <b>Profile section</b>in your resume to improve Your ATS Score </br>"${UpdatedSummary}"</p>`
+        }
+        else{
+            section.innerHTML = `<p>The Overall <b> Profile Summary</b> of your shared resume is "${Summary.strike()}" which is not Suitable for your Job. </p></br> <p>Use this Updated Version To improve Your ATS Score </br>"${UpdatedSummary}"</p>`;
+        }
         document.getElementById("summarySuggestion").appendChild(section);
 
 }
-function FalseSummaryDetails(UpdatedSummary){
-  createSuggestionBox()
-  document.getElementById("summarySuggestion").classList.remove("hide");
 
-        const section = document.createElement("span");
-        section.setAttribute("class","suggestions_div")
-        section.innerHTML = `<p>Add an Overall Profile section in your resume to improve Your ATS Score "${UpdatedSummary}"</p>`;
-        document.getElementById("summarySuggestion").appendChild(section);
-
-}
 
 
 function removeExtra(){
@@ -169,12 +181,18 @@ uploadButton.addEventListener('click', async () => {
         
         calculateScore(data.skills,data.projectCount, data.experience, data.username, data.socialMedia , data.internship);       
 
-        if(data.SummaryCheck == "False"){
-            FalseSummaryDetails(data.UpdatedSummary)
-        }
-        else{
-            SummaryDetails(data.Summary, data.UpdatedSummary)
-        }
+     
+        SummaryDetails(data.Summary, data.UpdatedSummary)
+     
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Optional: Adds a smooth scrolling effect
+          });
+        
+
+        start = false;
+
+        document.getElementById("checkATS").removeAttribute("href");
 
 
      
@@ -283,6 +301,7 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
     //Based in social media
     if (socialMedia >= 0 && socialMedia <= 2) {
         totalScore += 2;
+        socialMediaDetails()
     } else if (socialMedia >= 3 && socialMedia <= 4) {
         totalScore += 4;
     } else if (socialMedia >4) {
