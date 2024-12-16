@@ -102,7 +102,6 @@ app.post('/parse', upload.single('file'), async (req, res) => {
             internship: intership.response.text(),
             socialMedia: socialMedia.response.text(),
             Summary: SummaryMatch && SummaryMatch[1] ? SummaryMatch[1].trim() : 'Null',
-            SummaryCheck: summaryCheck.response.text(),
             UpdatedSummary: summaryUpdated.response.text(),
 
 
