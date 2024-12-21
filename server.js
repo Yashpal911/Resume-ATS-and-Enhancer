@@ -87,7 +87,6 @@ app.post('/parse', upload.single('file'), async (req, res) => {
         const experience = await chatSession.sendMessage(`tell me the how much experince is gained in this resume ${text} (including interships and jobs. return only integer months form or return 0) `);
         const intership = await chatSession.sendMessage(`tell me the number of interships done in this resume "${text}" (return only interger value or return 0)`)
         const socialMedia = await chatSession.sendMessage(`tell me how much many social media links is given in this resume "${text}" (return only integer value or return 0)`)
-
         const summaryUpdated = await chatSession.sendMessage(`update the overview Profile Summary for resume to make it more suitable for the "${jobRole}" (keep short & provide just result not multiple)`)
 
 
@@ -103,8 +102,6 @@ app.post('/parse', upload.single('file'), async (req, res) => {
             socialMedia: socialMedia.response.text(),
             Summary: SummaryMatch && SummaryMatch[1] ? SummaryMatch[1].trim() : 'Null',
             UpdatedSummary: summaryUpdated.response.text(),
-
-
         });
 
 

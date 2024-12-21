@@ -87,7 +87,7 @@ function SummaryDetails(Summary, UpdatedSummary){
         const section = document.createElement("span");
         section.setAttribute("class","suggestions_div")
         if(Summary == "Null"){
-            section.innerHTML = `<p>Add an Overall <b>Profile section</b>in your resume to improve Your ATS Score </br>"${UpdatedSummary}"</p>`
+            section.innerHTML = `<p>Add an Overall <b>Profile section</b> in your resume to improve Your ATS Score </br>"${UpdatedSummary}"</p>`
         }
         else{
             section.innerHTML = `<p>The Overall <b> Profile Summary</b> of your shared resume is "${Summary.strike()}" which is not Suitable for your Job. </p></br> <p>Use this Updated Version To improve Your ATS Score </br>"${UpdatedSummary}"</p>`;
@@ -136,7 +136,7 @@ fileInput.addEventListener('change', handleFileSelect);
 
 uploadButton.addEventListener('click', async () => {
     if (!selectedFile) {
-        alert('Please select a file (PDF, Word, or image).');
+        alert('Please select a file (PDF or Word).');
         return;
     }
     
@@ -258,7 +258,7 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
             });
         }
     });
-    console.log(match)
+
     // Score based on skills
     if (match >= 1 && match <= 2) {
         totalScore += 2;
@@ -345,10 +345,4 @@ function calculateScore(userSkills, projectCount, experience, name ,socialMedia,
         }
     });
 
-
-   
-
-
-    
-    
 };
